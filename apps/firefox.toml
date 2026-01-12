@@ -1,0 +1,13 @@
+[app]
+name = "firefox"
+description = "Mozilla Firefox Web Browser"
+homepage = "https://www.mozilla.org/firefox/"
+
+[source]
+type = "appimage"
+url = "https://github.com/nickvandewiele/firefox-appimage/releases/latest/download/Firefox_x86_64.AppImage"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["Network", "WebBrowser"]
+desktop_entry = true
