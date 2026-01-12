@@ -3,8 +3,9 @@
 //! ローカルファイル（.deb, .AppImage）またはリモートアプリをインストールします。
 
 use crate::db;
+use crate::db::app::SourceType;
 use crate::errors::AnError;
-use crate::handlers::{appimage, deb, remote};
+use crate::handlers::{appimage, deb, flatpak, remote};
 use crate::utils::{fs as fs_utils, ui};
 use anyhow::Result;
 use std::path::Path;
@@ -98,6 +99,67 @@ fn install_remote(name: &str, options: InstallOptions) -> Result<()> {
     let app_config = db::find_by_name(name)?
         .ok_or_else(|| AnError::AppNotInDatabase { name: name.to_string() })?;
 
+    // ソースタイプに応じた処理
+    match app_config.source.source_type {
+        SourceType::Flatpak => {
+            install_flatpak(&app_config)?;
+        }
+        SourceType::AppImage | SourceType::Deb => {
+            install_from_url(&app_config, options)?;
+        }
+        SourceType::Script => {
+            ui::warn("スクリプトタイプはまだサポートされていません");
+        }
+    }
+
+    Ok(())
+}
+
+/// Flatpakアプリをインストール
+fn install_flatpak(app_config: &db::app::AppConfig) -> Result<()> {
+    let flatpak_id = app_config.source.flatpak_id.as_ref()
+        .ok_or_else(|| AnError::ValidationError {
+            message: "Flatpak IDが指定されていません".to_string(),
+        })?;
+
+    ui::info(&format!("Flatpak ID: {}", flatpak_id));
+
+    // Flatpakがインストールされているか確認
+    if !flatpak::is_installed() {
+        return Err(AnError::FlatpakNotInstalled.into());
+    }
+
+    if !ui::confirm("続行しますか?")? {
+        ui::warn("インストールをキャンセルしました");
+        return Ok(());
+    }
+
+    // flatpak installを実行
+    ui::info("Flatpakをインストール中...");
+    let output = std::process::Command::new("flatpak")
+        .args(["install", "-y", "flathub", flatpak_id])
+        .output()?;
+
+    if !output.status.success() {
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        return Err(AnError::FlatpakInstallError {
+            message: stderr.to_string(),
+        }.into());
+    }
+
+    // エイリアス作成
+    let alias_name = app_config.app.name.clone();
+    if !flatpak::check_name_conflict(&alias_name) {
+        flatpak::create_wrapper(flatpak_id, &alias_name)?;
+        ui::info(&format!("エイリアス作成: {}", alias_name));
+    }
+
+    ui::success(&format!("{} をインストールしました", app_config.app.name));
+    Ok(())
+}
+
+/// URLからダウンロードしてインストール
+fn install_from_url(app_config: &db::app::AppConfig, options: InstallOptions) -> Result<()> {
     // URL表示と確認
     ui::info(&format!("ソース: {}", app_config.source.url));
 
@@ -106,32 +168,40 @@ fn install_remote(name: &str, options: InstallOptions) -> Result<()> {
         return Ok(());
     }
 
+    // URLを展開（バージョンプレースホルダ置換）
+    let url = db::app::expand_url(&app_config.source.url, app_config);
+
+    // ファイル名を決定
+    let filename = match app_config.source.source_type {
+        SourceType::AppImage => format!("{}.AppImage", app_config.app.name),
+        SourceType::Deb => format!("{}.deb", app_config.app.name),
+        _ => app_config.app.name.clone(),
+    };
+
     // ダウンロード
-    let downloaded_path = remote::download(&app_config.source.url, &app_config.app.name)?;
+    let downloaded_path = remote::download(&url, &filename)?;
 
     // ファイルタイプに応じた処理
-    let file_type = detect_file_type(downloaded_path.to_str().unwrap())?;
-    match file_type {
-        FileType::Deb => deb::install(&downloaded_path)?,
-        FileType::AppImage => {
+    match app_config.source.source_type {
+        SourceType::Deb => {
+            deb::install(&downloaded_path)?;
+            fs_utils::remove_file(&downloaded_path)?;
+        }
+        SourceType::AppImage => {
             let appimage_options = appimage::InstallOptions {
                 name: options.name,
                 desktop_entry: app_config.metadata
                     .as_ref()
                     .map(|m| m.desktop_entry.unwrap_or(false))
                     .unwrap_or(false) || options.desktop,
-                remove_source: true, // ダウンロードしたファイルは常に削除
+                remove_source: true,
             };
             appimage::install_with_options(&downloaded_path, appimage_options)?;
         }
+        _ => {}
     }
 
-    // 一時ファイル削除（debの場合）
-    if file_type == FileType::Deb {
-        fs_utils::remove_file(&downloaded_path)?;
-    }
-
-    ui::success(&format!("{} をインストールしました", name));
+    ui::success(&format!("{} をインストールしました", app_config.app.name));
     Ok(())
 }
 

@@ -33,6 +33,9 @@ pub enum AnError {
     #[error("E103: flatpak uninstallに失敗しました: {message}")]
     FlatpakUninstallError { message: String },
 
+    #[error("E006: flatpak installに失敗しました: {message}")]
+    FlatpakInstallError { message: String },
+
     // リンク関連 (E201-E299)
     #[error("E201: Flatpakがインストールされていません")]
     FlatpakNotInstalled,
