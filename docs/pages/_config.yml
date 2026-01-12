@@ -1,0 +1,5 @@
+title: AN - Unified Package Manager for Linux
+description: Install, remove, and manage AppImage, Flatpak, and Deb packages with a single command.
+theme: jekyll-theme-cayman
+show_downloads: true
+google_analytics:
