@@ -1,0 +1,13 @@
+[app]
+name = "joplin"
+description = "Joplin - Note Taking and To-Do App"
+homepage = "https://joplinapp.org/"
+
+[source]
+type = "appimage"
+url = "https://github.com/laurent22/joplin/releases/latest/download/Joplin-x86_64.AppImage"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["Office", "NoteTaking"]
+desktop_entry = true

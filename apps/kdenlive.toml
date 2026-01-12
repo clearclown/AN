@@ -1,0 +1,14 @@
+[app]
+name = "kdenlive"
+description = "Kdenlive - Video Editor"
+homepage = "https://kdenlive.org/"
+
+[source]
+type = "appimage"
+url = "https://download.kde.org/stable/kdenlive/24.02/linux/kdenlive-24.02.0-x86_64.AppImage"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["AudioVideo", "Video", "VideoEditing"]
+desktop_entry = true
+version = "24.02.0"

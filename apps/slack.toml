@@ -1,0 +1,13 @@
+[app]
+name = "slack"
+description = "Slack - Business Communication Platform"
+homepage = "https://slack.com/"
+
+[source]
+type = "flatpak"
+flatpak_id = "com.slack.Slack"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["Network", "InstantMessaging", "Office"]
+desktop_entry = true

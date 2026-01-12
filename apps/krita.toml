@@ -1,0 +1,14 @@
+[app]
+name = "krita"
+description = "Krita - Digital Painting Software"
+homepage = "https://krita.org/"
+
+[source]
+type = "appimage"
+url = "https://download.kde.org/stable/krita/5.2.2/krita-5.2.2-x86_64.appimage"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["Graphics", "2DGraphics", "RasterGraphics"]
+desktop_entry = true
+version = "5.2.2"

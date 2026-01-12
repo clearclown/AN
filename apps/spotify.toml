@@ -1,0 +1,13 @@
+[app]
+name = "spotify"
+description = "Spotify - Music for everyone"
+homepage = "https://spotify.com/"
+
+[source]
+type = "appimage"
+url = "https://github.com/ivan-hc/Spotify-appimage/releases/latest/download/Spotify-x86_64.AppImage"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["Audio", "Music", "Player"]
+desktop_entry = true

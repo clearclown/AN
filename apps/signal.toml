@@ -1,0 +1,13 @@
+[app]
+name = "signal"
+description = "Signal - Private Messenger"
+homepage = "https://signal.org/"
+
+[source]
+type = "appimage"
+url = "https://github.com/nickvandewiele/signal-desktop-appimage/releases/latest/download/Signal_Desktop-x86_64.AppImage"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["Network", "InstantMessaging"]
+desktop_entry = true

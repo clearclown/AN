@@ -1,0 +1,13 @@
+[app]
+name = "inkscape"
+description = "Inkscape - Vector Graphics Editor"
+homepage = "https://inkscape.org/"
+
+[source]
+type = "appimage"
+url = "https://github.com/nickvandewiele/inkscape-appimage/releases/latest/download/Inkscape-x86_64.AppImage"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["Graphics", "VectorGraphics"]
+desktop_entry = true

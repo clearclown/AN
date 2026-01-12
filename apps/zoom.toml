@@ -1,0 +1,13 @@
+[app]
+name = "zoom"
+description = "Zoom - Video Conferencing"
+homepage = "https://zoom.us/"
+
+[source]
+type = "flatpak"
+flatpak_id = "us.zoom.Zoom"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["Network", "VideoConference"]
+desktop_entry = true

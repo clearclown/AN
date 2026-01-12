@@ -1,0 +1,13 @@
+[app]
+name = "anytype"
+description = "Anytype - Local-first Knowledge Management"
+homepage = "https://anytype.io/"
+
+[source]
+type = "appimage"
+url = "https://github.com/anyproto/anytype-ts/releases/latest/download/Anytype-x86_64.AppImage"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["Office", "NoteTaking"]
+desktop_entry = true

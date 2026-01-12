@@ -1,0 +1,13 @@
+[app]
+name = "cryptomator"
+description = "Cryptomator - Cloud Storage Encryption"
+homepage = "https://cryptomator.org/"
+
+[source]
+type = "appimage"
+url = "https://github.com/cryptomator/cryptomator/releases/latest/download/cryptomator-x86_64.AppImage"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["Utility", "Security", "FileTools"]
+desktop_entry = true

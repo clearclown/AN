@@ -1,0 +1,13 @@
+[app]
+name = "calibre"
+description = "Calibre - E-book Management"
+homepage = "https://calibre-ebook.com/"
+
+[source]
+type = "appimage"
+url = "https://github.com/nickvandewiele/calibre-appimage/releases/latest/download/Calibre-x86_64.AppImage"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["Office", "Viewer"]
+desktop_entry = true

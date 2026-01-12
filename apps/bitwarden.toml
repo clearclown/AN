@@ -1,0 +1,13 @@
+[app]
+name = "bitwarden"
+description = "Bitwarden - Password Manager"
+homepage = "https://bitwarden.com/"
+
+[source]
+type = "appimage"
+url = "https://github.com/bitwarden/clients/releases/latest/download/Bitwarden-x86_64.AppImage"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["Utility", "Security"]
+desktop_entry = true

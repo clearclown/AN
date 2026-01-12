@@ -1,0 +1,13 @@
+[app]
+name = "postman"
+description = "Postman - API Development Environment"
+homepage = "https://www.postman.com/"
+
+[source]
+type = "flatpak"
+flatpak_id = "com.getpostman.Postman"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["Development", "WebDevelopment"]
+desktop_entry = true

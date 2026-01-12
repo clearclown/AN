@@ -1,0 +1,13 @@
+[app]
+name = "blender"
+description = "Blender - 3D Creation Suite"
+homepage = "https://www.blender.org/"
+
+[source]
+type = "flatpak"
+flatpak_id = "org.blender.Blender"
+architecture = ["x86_64", "aarch64"]
+
+[metadata]
+categories = ["Graphics", "3DGraphics", "Video"]
+desktop_entry = true

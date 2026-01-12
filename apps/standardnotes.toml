@@ -1,0 +1,13 @@
+[app]
+name = "standardnotes"
+description = "Standard Notes - End-to-End Encrypted Notes"
+homepage = "https://standardnotes.com/"
+
+[source]
+type = "appimage"
+url = "https://github.com/nickvandewiele/standard-notes-appimage/releases/latest/download/Standard-Notes-x86_64.AppImage"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["Office", "NoteTaking"]
+desktop_entry = true
