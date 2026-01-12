@@ -1,0 +1,13 @@
+[app]
+name = "nvim"
+description = "Neovim - Hyperextensible Vim-based text editor"
+homepage = "https://neovim.io/"
+
+[source]
+type = "appimage"
+url = "https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["Development", "TextEditor"]
+desktop_entry = false

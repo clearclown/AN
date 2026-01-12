@@ -1,0 +1,13 @@
+[app]
+name = "thunderbird"
+description = "Mozilla Thunderbird - Free email application"
+homepage = "https://www.thunderbird.net/"
+
+[source]
+type = "flatpak"
+flatpak_id = "org.mozilla.Thunderbird"
+architecture = ["x86_64", "aarch64"]
+
+[metadata]
+categories = ["Network", "Email"]
+desktop_entry = true

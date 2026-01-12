@@ -1,0 +1,14 @@
+[app]
+name = "keepassxc"
+description = "KeePassXC - Cross-platform Password Manager"
+homepage = "https://keepassxc.org/"
+
+[source]
+type = "appimage"
+url = "https://github.com/keepassxreboot/keepassxc/releases/latest/download/KeePassXC-{version}-x86_64.AppImage"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["Utility", "Security"]
+desktop_entry = true
+version = "2.7.6"

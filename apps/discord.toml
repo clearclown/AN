@@ -1,0 +1,13 @@
+[app]
+name = "discord"
+description = "Discord - Chat for Communities and Friends"
+homepage = "https://discord.com/"
+
+[source]
+type = "deb"
+url = "https://discord.com/api/download?platform=linux&format=deb"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["Network", "InstantMessaging"]
+desktop_entry = true

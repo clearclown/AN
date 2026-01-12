@@ -1,0 +1,14 @@
+[app]
+name = "flameshot"
+description = "Flameshot - Powerful yet simple screenshot software"
+homepage = "https://flameshot.org/"
+
+[source]
+type = "appimage"
+url = "https://github.com/flameshot-org/flameshot/releases/latest/download/Flameshot-{version}.x86_64.AppImage"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["Utility", "Graphics"]
+desktop_entry = true
+version = "12.1.0"

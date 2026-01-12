@@ -1,0 +1,14 @@
+[app]
+name = "audacity"
+description = "Audacity - Free, open source audio editor"
+homepage = "https://www.audacityteam.org/"
+
+[source]
+type = "appimage"
+url = "https://github.com/audacity/audacity/releases/latest/download/audacity-linux-{version}-x64.AppImage"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["AudioVideo", "Audio", "AudioVideoEditing"]
+desktop_entry = true
+version = "3.4.2"

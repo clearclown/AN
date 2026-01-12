@@ -1,0 +1,13 @@
+[app]
+name = "libreoffice"
+description = "LibreOffice - Free and powerful office suite"
+homepage = "https://www.libreoffice.org/"
+
+[source]
+type = "flatpak"
+flatpak_id = "org.libreoffice.LibreOffice"
+architecture = ["x86_64", "aarch64"]
+
+[metadata]
+categories = ["Office", "WordProcessor", "Spreadsheet", "Presentation"]
+desktop_entry = true

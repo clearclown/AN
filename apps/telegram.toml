@@ -1,0 +1,13 @@
+[app]
+name = "telegram"
+description = "Telegram Desktop - Fast and secure messaging"
+homepage = "https://telegram.org/"
+
+[source]
+type = "flatpak"
+flatpak_id = "org.telegram.desktop"
+architecture = ["x86_64", "aarch64"]
+
+[metadata]
+categories = ["Network", "InstantMessaging"]
+desktop_entry = true
