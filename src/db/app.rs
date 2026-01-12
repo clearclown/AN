@@ -33,8 +33,11 @@ pub struct SourceInfo {
     /// インストールタイプ
     #[serde(rename = "type")]
     pub source_type: SourceType,
-    /// ダウンロードURL
+    /// ダウンロードURL（AppImage, Deb用）
+    #[serde(default)]
     pub url: String,
+    /// Flatpak ID（Flatpak用）
+    pub flatpak_id: Option<String>,
     /// 対応アーキテクチャ
     pub architecture: Vec<String>,
 }
@@ -142,12 +145,23 @@ pub fn validate(config: &AppConfig) -> Result<()> {
         .into());
     }
 
-    // url は有効なURL形式
-    if !config.source.url.starts_with("http://") && !config.source.url.starts_with("https://") {
-        return Err(AnError::ValidationError {
-            message: "url must be a valid HTTP(S) URL".to_string(),
+    // Flatpak以外はURLが必要
+    if config.source.source_type != SourceType::Flatpak {
+        if config.source.url.is_empty()
+            || (!config.source.url.starts_with("http://") && !config.source.url.starts_with("https://")) {
+            return Err(AnError::ValidationError {
+                message: "url must be a valid HTTP(S) URL".to_string(),
+            }
+            .into());
         }
-        .into());
+    } else {
+        // Flatpakはflatpak_idが必要
+        if config.source.flatpak_id.is_none() {
+            return Err(AnError::ValidationError {
+                message: "flatpak_id is required for Flatpak apps".to_string(),
+            }
+            .into());
+        }
     }
 
     // architecture は1つ以上
@@ -201,6 +215,7 @@ mod tests {
             source: SourceInfo {
                 source_type: SourceType::AppImage,
                 url: "https://example.com/app-{version}-{arch}.AppImage".to_string(),
+                flatpak_id: None,
                 architecture: vec!["x86_64".to_string()],
             },
             metadata: Some(Metadata {

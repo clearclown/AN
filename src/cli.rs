@@ -49,6 +49,23 @@ pub enum Commands {
 
     /// ANとアプリDBを更新
     Update,
+
+    /// インストール済みアプリ一覧
+    #[command(visible_alias = "ls")]
+    List,
+
+    /// アプリDBを検索
+    #[command(visible_alias = "s")]
+    Search {
+        /// 検索クエリ（アプリ名または説明）
+        query: Option<String>,
+    },
+
+    /// アプリ詳細を表示
+    Info {
+        /// アプリ名
+        name: String,
+    },
 }
 
 #[cfg(test)]
@@ -136,5 +153,44 @@ mod tests {
     fn test_update_command() {
         let cli = Cli::parse_from(["an", "update"]);
         assert!(matches!(cli.command, Commands::Update));
+    }
+
+    #[test]
+    fn test_list_command() {
+        let cli = Cli::parse_from(["an", "list"]);
+        assert!(matches!(cli.command, Commands::List));
+    }
+
+    #[test]
+    fn test_list_alias() {
+        let cli = Cli::parse_from(["an", "ls"]);
+        assert!(matches!(cli.command, Commands::List));
+    }
+
+    #[test]
+    fn test_search_command() {
+        let cli = Cli::parse_from(["an", "search", "firefox"]);
+        match cli.command {
+            Commands::Search { query } => assert_eq!(query, Some("firefox".to_string())),
+            _ => panic!("Expected Search command"),
+        }
+    }
+
+    #[test]
+    fn test_search_without_query() {
+        let cli = Cli::parse_from(["an", "search"]);
+        match cli.command {
+            Commands::Search { query } => assert!(query.is_none()),
+            _ => panic!("Expected Search command"),
+        }
+    }
+
+    #[test]
+    fn test_info_command() {
+        let cli = Cli::parse_from(["an", "info", "firefox"]);
+        match cli.command {
+            Commands::Info { name } => assert_eq!(name, "firefox"),
+            _ => panic!("Expected Info command"),
+        }
     }
 }

@@ -35,6 +35,18 @@ fn main() -> Result<()> {
         Commands::Update => {
             commands::update::run()?;
         }
+        Commands::List => {
+            commands::list::run()?;
+        }
+        Commands::Search { query } => {
+            match query {
+                Some(q) => commands::search::run(&q)?,
+                None => commands::search::list_all()?,
+            }
+        }
+        Commands::Info { name } => {
+            commands::search::show_details(&name)?;
+        }
     }
 
     Ok(())
