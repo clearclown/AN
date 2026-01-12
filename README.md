@@ -16,12 +16,72 @@
 
 ## インストール
 
-```bash
-# ワンライナーインストール（準備中）
-curl -fsSL https://raw.githubusercontent.com/clearclown/AN/main/install.sh | bash
+### ワンライナー（推奨）
 
-# Cargoからビルド
+```bash
+curl -fsSL https://raw.githubusercontent.com/clearclown/AN/main/install.sh | bash
+```
+
+### Cargo (Rustユーザー向け)
+
+```bash
+# crates.io から（公開後）
+cargo install an
+
+# GitHubから直接
 cargo install --git https://github.com/clearclown/AN
+```
+
+### Arch Linux (AUR)
+
+```bash
+# yay
+yay -S an
+
+# paru
+paru -S an
+```
+
+### Nix
+
+```bash
+# Flakeを使用
+nix profile install github:clearclown/AN
+
+# 一時的に使用
+nix run github:clearclown/AN -- --help
+```
+
+### Homebrew (Linux)
+
+```bash
+brew tap clearclown/an
+brew install an
+```
+
+### 手動ダウンロード
+
+[Releases](https://github.com/clearclown/AN/releases) からバイナリをダウンロード:
+
+| アーキテクチャ | ファイル名 |
+|---------------|-----------|
+| x86_64 | `an-linux-x86_64` |
+| aarch64 (ARM64) | `an-linux-aarch64` |
+
+```bash
+# 例: x86_64
+wget https://github.com/clearclown/AN/releases/latest/download/an-linux-x86_64
+chmod +x an-linux-x86_64
+sudo mv an-linux-x86_64 /usr/local/bin/an
+```
+
+### ソースからビルド
+
+```bash
+git clone https://github.com/clearclown/AN
+cd AN
+cargo build --release
+sudo cp target/release/an /usr/local/bin/
 ```
 
 ## 使い方

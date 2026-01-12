@@ -2,12 +2,24 @@
 name = "an"
 version = "0.1.0"
 edition = "2021"
+rust-version = "1.70"
 description = "AN (安装) - Unified Package Manager for Linux"
 license = "MIT"
 repository = "https://github.com/clearclown/AN"
+homepage = "https://github.com/clearclown/AN"
+documentation = "https://github.com/clearclown/AN#readme"
+readme = "README.md"
 authors = ["clearclown"]
 keywords = ["package-manager", "linux", "appimage", "deb", "flatpak"]
 categories = ["command-line-utilities"]
+exclude = [
+    ".github/",
+    "docs/",
+    "tests/",
+    "_legacy/",
+    "*.md",
+    "!README.md",
+]
 
 [dependencies]
 clap = { version = "4", features = ["derive"] }
