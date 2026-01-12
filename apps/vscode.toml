@@ -1,0 +1,13 @@
+[app]
+name = "code"
+description = "Visual Studio Code - Code editing. Redefined."
+homepage = "https://code.visualstudio.com/"
+
+[source]
+type = "deb"
+url = "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["Development", "IDE", "TextEditor"]
+desktop_entry = true

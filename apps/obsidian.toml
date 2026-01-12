@@ -1,0 +1,14 @@
+[app]
+name = "obsidian"
+description = "Obsidian - A second brain, for you, forever"
+homepage = "https://obsidian.md/"
+
+[source]
+type = "appimage"
+url = "https://github.com/obsidianmd/obsidian-releases/releases/latest/download/Obsidian-{version}.AppImage"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["Office", "NoteTaking"]
+desktop_entry = true
+version = "1.5.3"

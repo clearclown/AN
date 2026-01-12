@@ -1,0 +1,13 @@
+[app]
+name = "brave"
+description = "Brave Browser - Secure, Fast & Private Web Browser with Adblocker"
+homepage = "https://brave.com/"
+
+[source]
+type = "appimage"
+url = "https://github.com/nickvandewiele/brave-appimage/releases/latest/download/Brave-x86_64.AppImage"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["Network", "WebBrowser"]
+desktop_entry = true

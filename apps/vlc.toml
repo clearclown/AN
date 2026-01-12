@@ -1,0 +1,13 @@
+[app]
+name = "vlc"
+description = "VLC media player - Free and open source multimedia player"
+homepage = "https://www.videolan.org/vlc/"
+
+[source]
+type = "appimage"
+url = "https://github.com/AZTool/vlc-nightly-appimage/releases/latest/download/VLC-x86_64.AppImage"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["AudioVideo", "Player", "Video"]
+desktop_entry = true

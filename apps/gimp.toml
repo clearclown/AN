@@ -1,0 +1,13 @@
+[app]
+name = "gimp"
+description = "GNU Image Manipulation Program"
+homepage = "https://www.gimp.org/"
+
+[source]
+type = "appimage"
+url = "https://github.com/ivan-hc/GIMP-appimage/releases/latest/download/GIMP-x86_64.AppImage"
+architecture = ["x86_64"]
+
+[metadata]
+categories = ["Graphics", "ImageEditor"]
+desktop_entry = true
