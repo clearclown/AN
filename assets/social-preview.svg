@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="50%" style="stop-color:#16213e"/>
+      <stop offset="100%" style="stop-color:#0f3460"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e94560"/>
+      <stop offset="100%" style="stop-color:#ff6b6b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="640" fill="url(#bg)"/>
+
+  <!-- Decorative elements -->
+  <circle cx="100" cy="100" r="200" fill="#e94560" opacity="0.1"/>
+  <circle cx="1180" cy="540" r="250" fill="#e94560" opacity="0.1"/>
+
+  <!-- Grid pattern -->
+  <g stroke="#ffffff" stroke-width="0.5" opacity="0.05">
+    <line x1="0" y1="160" x2="1280" y2="160"/>
+    <line x1="0" y1="320" x2="1280" y2="320"/>
+    <line x1="0" y1="480" x2="1280" y2="480"/>
+    <line x1="320" y1="0" x2="320" y2="640"/>
+    <line x1="640" y1="0" x2="640" y2="640"/>
+    <line x1="960" y1="0" x2="960" y2="640"/>
+  </g>
+
+  <!-- Main title -->
+  <text x="640" y="200" font-family="system-ui, -apple-system, sans-serif" font-size="120" font-weight="bold" fill="#ffffff" text-anchor="middle">
+    AN
+  </text>
+
+  <!-- Chinese characters -->
+  <text x="640" y="280" font-family="system-ui, -apple-system, sans-serif" font-size="48" fill="url(#accent)" text-anchor="middle">
+    安装
+  </text>
+
+  <!-- Tagline -->
+  <text x="640" y="380" font-family="system-ui, -apple-system, sans-serif" font-size="36" fill="#ffffff" text-anchor="middle" opacity="0.9">
+    Unified Package Manager for Linux
+  </text>
+
+  <!-- Features -->
+  <g font-family="monospace" font-size="24" fill="#ffffff" opacity="0.7">
+    <text x="640" y="480" text-anchor="middle">AppImage | Flatpak | Deb</text>
+  </g>
+
+  <!-- Command example -->
+  <rect x="390" y="510" width="500" height="50" rx="8" fill="#000000" opacity="0.4"/>
+  <text x="640" y="545" font-family="monospace" font-size="24" fill="#e94560" text-anchor="middle">
+    $ an install firefox
+  </text>
+
+  <!-- Rust badge -->
+  <g transform="translate(1150, 50)">
+    <rect x="0" y="0" width="80" height="30" rx="4" fill="#dea584"/>
+    <text x="40" y="21" font-family="system-ui, sans-serif" font-size="14" fill="#000000" text-anchor="middle" font-weight="bold">Rust</text>
+  </g>
+</svg>
