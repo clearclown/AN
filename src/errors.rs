@@ -17,8 +17,8 @@ pub enum AnError {
     #[error("E003: アプリDBにエントリが見つかりません: {name}")]
     AppNotInDatabase { name: String },
 
-    #[error("E004: ダウンロードに失敗しました: {url}")]
-    DownloadFailed { url: String },
+    #[error("E004: ダウンロードに失敗しました: {message}")]
+    DownloadFailed { message: String },
 
     #[error("E005: dpkg/権限エラー: {message}")]
     DpkgError { message: String },
@@ -46,6 +46,7 @@ pub enum AnError {
 
     // アップデート関連 (E301-E399)
     #[error("E301: アップデート情報の取得に失敗しました")]
+    #[allow(dead_code)]
     UpdateCheckFailed,
 
     // 一般 (E901-E999)

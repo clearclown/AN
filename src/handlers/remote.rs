@@ -28,18 +28,18 @@ pub fn download(url: &str, filename: &str) -> Result<PathBuf> {
 
     // ダウンロード
     let response = reqwest::blocking::get(url).map_err(|_| AnError::DownloadFailed {
-        url: url.to_string(),
+        message: url.to_string(),
     })?;
 
     if !response.status().is_success() {
         return Err(AnError::DownloadFailed {
-            url: url.to_string(),
+            message: url.to_string(),
         }
         .into());
     }
 
     let bytes = response.bytes().map_err(|_| AnError::DownloadFailed {
-        url: url.to_string(),
+        message: url.to_string(),
     })?;
 
     // ファイルに書き込み
