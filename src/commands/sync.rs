@@ -5,7 +5,7 @@
 use crate::utils::ui;
 use anyhow::Result;
 use std::fs;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::process::Command;
 
 /// GitHubリポジトリURL
@@ -131,7 +131,7 @@ pub fn run() -> Result<()> {
 }
 
 /// curlを使用してappsディレクトリをダウンロード
-fn sync_via_curl(db_dir: &PathBuf) -> Result<()> {
+fn sync_via_curl(db_dir: &Path) -> Result<()> {
     // 既知のアプリファイルをダウンロード
     let apps = [
         "firefox", "brave", "gimp", "vlc", "obsidian", "vscode",

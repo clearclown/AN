@@ -9,6 +9,7 @@ use std::process::Command;
 
 /// インストール済みアプリの種別
 #[derive(Debug)]
+#[allow(dead_code)]
 pub struct InstalledApp {
     pub name: String,
     pub source: AppSource,
@@ -17,6 +18,7 @@ pub struct InstalledApp {
 
 /// アプリのインストール元
 #[derive(Debug)]
+#[allow(dead_code)]
 pub enum AppSource {
     AppImage,
     Flatpak,
@@ -63,7 +65,7 @@ pub fn run() -> Result<()> {
         match flatpak::scan_apps() {
             Ok(apps) if !apps.is_empty() => {
                 for app in &apps {
-                    println!("  {} ({})", app.id.split('.').last().unwrap_or(&app.id), app.id);
+                    println!("  {} ({})", app.id.split('.').next_back().unwrap_or(&app.id), app.id);
                 }
                 total += apps.len();
             }
@@ -89,6 +91,7 @@ pub fn run() -> Result<()> {
 }
 
 /// 特定のアプリがインストールされているか確認
+#[allow(dead_code)]
 pub fn is_installed(name: &str) -> Option<InstalledApp> {
     // AppImageをチェック
     if appimage::detect(name).is_some() {

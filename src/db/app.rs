@@ -128,6 +128,7 @@ pub fn find_by_name(name: &str) -> Result<Option<AppConfig>> {
 }
 
 /// AppConfigのバリデーション
+#[allow(dead_code)]
 pub fn validate(config: &AppConfig) -> Result<()> {
     // name は空でない
     if config.app.name.is_empty() {
@@ -176,6 +177,7 @@ pub fn validate(config: &AppConfig) -> Result<()> {
 }
 
 /// 現在のアーキテクチャに対応するアプリのみをフィルタ
+#[allow(dead_code)]
 pub fn filter_by_architecture(apps: Vec<AppConfig>) -> Vec<AppConfig> {
     let current_arch = std::env::consts::ARCH;
 

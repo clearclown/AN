@@ -14,6 +14,7 @@ use std::process::Command;
 #[derive(Debug, Clone)]
 pub struct FlatpakApp {
     pub id: String,
+    #[allow(dead_code)]
     pub name: String,
 }
 
@@ -118,7 +119,7 @@ pub fn remove(app_id: &str) -> Result<()> {
 
     // 関連するラッパースクリプトも削除（存在すれば）
     // 名前を推測して削除を試みる
-    let name_guess = app_id.split('.').last().unwrap_or(app_id).to_lowercase();
+    let name_guess = app_id.split('.').next_back().unwrap_or(app_id).to_lowercase();
     let wrapper_path = bin_dir().join(&name_guess);
     if wrapper_path.exists() {
         // ANが生成したラッパーか確認
@@ -154,7 +155,7 @@ pub fn detect(name: &str) -> Option<String> {
             return Some(app_id.to_string());
         }
         // IDの末尾（アプリ名部分）で検索
-        if let Some(last_part) = app_id.split('.').last() {
+        if let Some(last_part) = app_id.split('.').next_back() {
             if last_part.eq_ignore_ascii_case(name) {
                 return Some(app_id.to_string());
             }

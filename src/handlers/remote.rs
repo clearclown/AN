@@ -51,6 +51,7 @@ pub fn download(url: &str, filename: &str) -> Result<PathBuf> {
 }
 
 /// プログレスバー付きダウンロード
+#[allow(dead_code)]
 pub fn download_with_progress<F>(url: &str, filename: &str, _callback: F) -> Result<PathBuf>
 where
     F: Fn(u64, u64),

@@ -53,7 +53,7 @@ pub fn extract_app_name(path: &Path) -> String {
             // バージョン番号パターンを検出して除去
             // パターン: -数字.数字 または -x86_64 などのアーキテクチャ指定
             let name = s
-                .split(|c| c == '-' || c == '_')
+                .split(['-', '_'])
                 .take_while(|part| {
                     // バージョン番号やアーキテクチャっぽいものは除外
                     !part.chars().next().map(|c| c.is_ascii_digit()).unwrap_or(false)
@@ -67,7 +67,7 @@ pub fn extract_app_name(path: &Path) -> String {
                 .join("-");
 
             if name.is_empty() {
-                s.split(|c| c == '-' || c == '_')
+                s.split(['-', '_'])
                     .next()
                     .unwrap_or(s)
                     .to_lowercase()
@@ -90,6 +90,7 @@ pub struct InstallOptions {
 }
 
 /// AppImageをインストール
+#[allow(dead_code)]
 pub fn install(path: &Path) -> Result<()> {
     install_with_options(path, InstallOptions::default())
 }

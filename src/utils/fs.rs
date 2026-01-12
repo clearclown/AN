@@ -14,6 +14,7 @@ pub fn remove_file(path: &Path) -> Result<()> {
 }
 
 /// ディレクトリを再帰的に削除
+#[allow(dead_code)]
 pub fn remove_dir_all(path: &Path) -> Result<()> {
     if path.exists() {
         std::fs::remove_dir_all(path)?;
@@ -22,6 +23,7 @@ pub fn remove_dir_all(path: &Path) -> Result<()> {
 }
 
 /// ディレクトリを作成（存在しない場合）
+#[allow(dead_code)]
 pub fn ensure_dir(path: &Path) -> Result<()> {
     if !path.exists() {
         std::fs::create_dir_all(path)?;
@@ -30,11 +32,13 @@ pub fn ensure_dir(path: &Path) -> Result<()> {
 }
 
 /// ファイルが存在するか確認
+#[allow(dead_code)]
 pub fn file_exists(path: &Path) -> bool {
     path.exists() && path.is_file()
 }
 
 /// ディレクトリが存在するか確認
+#[allow(dead_code)]
 pub fn dir_exists(path: &Path) -> bool {
     path.exists() && path.is_dir()
 }

@@ -62,6 +62,23 @@ an link
 an update
 ```
 
+### アプリの検索・情報表示
+
+```bash
+# インストール済みアプリ一覧
+an list
+
+# 利用可能なアプリを検索
+an search browser
+an search          # 全アプリ一覧
+
+# アプリ詳細を表示
+an info firefox
+
+# アプリDBを最新に同期
+an sync
+```
+
 ## コマンド一覧
 
 | コマンド | エイリアス | 説明 |
@@ -69,24 +86,28 @@ an update
 | `an install <target>` | `i` | アプリをインストール |
 | `an remove <target>` | `rm`, `uninstall` | アプリを完全削除 |
 | `an link` | `l` | Flatpakエイリアスを生成 |
-| `an update` | - | AN・DBを更新 |
+| `an update` | - | AN本体・DBを更新 |
+| `an list` | `ls` | インストール済みアプリ一覧 |
+| `an search [query]` | `s` | アプリDBを検索 |
+| `an info <name>` | - | アプリ詳細を表示 |
+| `an sync` | - | アプリDBをGitHubから同期 |
 
 ## アーキテクチャ
 
 ```
-┌─────────────────────────────────────────────────┐
-│                    CLI Layer                     │
-│              (clap derive macros)                │
-├─────────────────────────────────────────────────┤
-│                 Command Layer                    │
-│     install │ remove │ link │ update            │
-├─────────────────────────────────────────────────┤
-│                 Handler Layer                    │
-│      deb │ appimage │ flatpak │ remote          │
-├─────────────────────────────────────────────────┤
-│                   DB Layer                       │
-│            TOML App Database                     │
-└─────────────────────────────────────────────────┘
+┌───────────────────────────────────────────────────────────────┐
+│                         CLI Layer                              │
+│                    (clap derive macros)                        │
+├───────────────────────────────────────────────────────────────┤
+│                       Command Layer                            │
+│  install │ remove │ link │ update │ list │ search │ info │ sync │
+├───────────────────────────────────────────────────────────────┤
+│                       Handler Layer                            │
+│            deb │ appimage │ flatpak │ remote                   │
+├───────────────────────────────────────────────────────────────┤
+│                         DB Layer                               │
+│                   TOML App Database                            │
+└───────────────────────────────────────────────────────────────┘
 ```
 
 ## ディレクトリ構成

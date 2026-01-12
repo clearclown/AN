@@ -41,6 +41,7 @@ pub enum AnError {
     FlatpakNotInstalled,
 
     #[error("E202: シンボリックリンクの作成に失敗しました: {path}")]
+    #[allow(dead_code)]
     SymlinkCreationFailed { path: String },
 
     // アップデート関連 (E301-E399)

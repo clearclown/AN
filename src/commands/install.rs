@@ -49,6 +49,7 @@ pub fn detect_file_type(path: &str) -> Result<FileType, AnError> {
 }
 
 /// installコマンドのエントリーポイント
+#[allow(dead_code)]
 pub fn run(target: &str) -> Result<()> {
     run_with_options(target, InstallOptions::default())
 }

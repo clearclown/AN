@@ -38,6 +38,7 @@ pub fn confirm(message: &str) -> io::Result<bool> {
 }
 
 /// プログレスバーを表示（簡易版）
+#[allow(dead_code)]
 pub fn progress(current: u64, total: u64) {
     let percentage = if total > 0 {
         (current as f64 / total as f64 * 100.0) as u32
