@@ -47,6 +47,9 @@ fn main() -> Result<()> {
         Commands::Info { name } => {
             commands::search::show_details(&name)?;
         }
+        Commands::Sync => {
+            commands::sync::run()?;
+        }
     }
 
     Ok(())

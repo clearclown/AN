@@ -66,6 +66,9 @@ pub enum Commands {
         /// アプリ名
         name: String,
     },
+
+    /// アプリDBをGitHubから同期
+    Sync,
 }
 
 #[cfg(test)]
@@ -192,5 +195,11 @@ mod tests {
             Commands::Info { name } => assert_eq!(name, "firefox"),
             _ => panic!("Expected Info command"),
         }
+    }
+
+    #[test]
+    fn test_sync_command() {
+        let cli = Cli::parse_from(["an", "sync"]);
+        assert!(matches!(cli.command, Commands::Sync));
     }
 }
