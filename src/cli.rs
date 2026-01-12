@@ -22,6 +22,18 @@ pub enum Commands {
     Install {
         /// ファイルパスまたはアプリ名
         target: String,
+
+        /// カスタムコマンド名を指定（AppImage用）
+        #[arg(short, long)]
+        name: Option<String>,
+
+        /// デスクトップエントリを作成（AppImage用）
+        #[arg(short, long)]
+        desktop: bool,
+
+        /// 元ファイルを削除（移動モード、AppImage用）
+        #[arg(short = 'm', long = "move")]
+        move_file: bool,
     },
 
     /// アプリを削除（パージ）
@@ -54,7 +66,12 @@ mod tests {
     fn test_install_command() {
         let cli = Cli::parse_from(["an", "install", "firefox"]);
         match cli.command {
-            Commands::Install { target } => assert_eq!(target, "firefox"),
+            Commands::Install { target, name, desktop, move_file } => {
+                assert_eq!(target, "firefox");
+                assert!(name.is_none());
+                assert!(!desktop);
+                assert!(!move_file);
+            },
             _ => panic!("Expected Install command"),
         }
     }
@@ -63,7 +80,21 @@ mod tests {
     fn test_install_alias() {
         let cli = Cli::parse_from(["an", "i", "firefox"]);
         match cli.command {
-            Commands::Install { target } => assert_eq!(target, "firefox"),
+            Commands::Install { target, .. } => assert_eq!(target, "firefox"),
+            _ => panic!("Expected Install command"),
+        }
+    }
+
+    #[test]
+    fn test_install_with_options() {
+        let cli = Cli::parse_from(["an", "install", "app.AppImage", "-n", "myapp", "-d", "-m"]);
+        match cli.command {
+            Commands::Install { target, name, desktop, move_file } => {
+                assert_eq!(target, "app.AppImage");
+                assert_eq!(name, Some("myapp".to_string()));
+                assert!(desktop);
+                assert!(move_file);
+            },
             _ => panic!("Expected Install command"),
         }
     }

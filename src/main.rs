@@ -18,8 +18,13 @@ fn main() -> Result<()> {
     let cli = Cli::parse();
 
     match cli.command {
-        Commands::Install { target } => {
-            commands::install::run(&target)?;
+        Commands::Install { target, name, desktop, move_file } => {
+            let options = commands::install::InstallOptions {
+                name,
+                desktop,
+                move_file,
+            };
+            commands::install::run_with_options(&target, options)?;
         }
         Commands::Remove { target } => {
             commands::remove::run(&target)?;
