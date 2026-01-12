@@ -42,9 +42,7 @@ fn test_no_args_shows_help() {
 #[test]
 fn test_invalid_command() {
     let mut cmd = Command::cargo_bin("an").unwrap();
-    cmd.arg("invalid_command")
-        .assert()
-        .failure();
+    cmd.arg("invalid_command").assert().failure();
 }
 
 /// install --help
@@ -74,9 +72,7 @@ fn test_remove_help() {
 #[test]
 fn test_list_help() {
     let mut cmd = Command::cargo_bin("an").unwrap();
-    cmd.args(["list", "--help"])
-        .assert()
-        .success();
+    cmd.args(["list", "--help"]).assert().success();
 }
 
 /// search --help
@@ -103,27 +99,21 @@ fn test_info_help() {
 #[test]
 fn test_sync_help() {
     let mut cmd = Command::cargo_bin("an").unwrap();
-    cmd.args(["sync", "--help"])
-        .assert()
-        .success();
+    cmd.args(["sync", "--help"]).assert().success();
 }
 
 /// link --help
 #[test]
 fn test_link_help() {
     let mut cmd = Command::cargo_bin("an").unwrap();
-    cmd.args(["link", "--help"])
-        .assert()
-        .success();
+    cmd.args(["link", "--help"]).assert().success();
 }
 
 /// update --help
 #[test]
 fn test_update_help() {
     let mut cmd = Command::cargo_bin("an").unwrap();
-    cmd.args(["update", "--help"])
-        .assert()
-        .success();
+    cmd.args(["update", "--help"]).assert().success();
 }
 
 /// エイリアス 'i' のテスト
@@ -140,43 +130,33 @@ fn test_install_alias() {
 #[test]
 fn test_remove_alias_rm() {
     let mut cmd = Command::cargo_bin("an").unwrap();
-    cmd.args(["rm", "--help"])
-        .assert()
-        .success();
+    cmd.args(["rm", "--help"]).assert().success();
 }
 
 /// エイリアス 'uninstall' のテスト
 #[test]
 fn test_remove_alias_uninstall() {
     let mut cmd = Command::cargo_bin("an").unwrap();
-    cmd.args(["uninstall", "--help"])
-        .assert()
-        .success();
+    cmd.args(["uninstall", "--help"]).assert().success();
 }
 
 /// エイリアス 'ls' のテスト
 #[test]
 fn test_list_alias() {
     let mut cmd = Command::cargo_bin("an").unwrap();
-    cmd.args(["ls", "--help"])
-        .assert()
-        .success();
+    cmd.args(["ls", "--help"]).assert().success();
 }
 
 /// エイリアス 's' のテスト
 #[test]
 fn test_search_alias() {
     let mut cmd = Command::cargo_bin("an").unwrap();
-    cmd.args(["s", "--help"])
-        .assert()
-        .success();
+    cmd.args(["s", "--help"]).assert().success();
 }
 
 /// エイリアス 'l' のテスト
 #[test]
 fn test_link_alias() {
     let mut cmd = Command::cargo_bin("an").unwrap();
-    cmd.args(["l", "--help"])
-        .assert()
-        .success();
+    cmd.args(["l", "--help"]).assert().success();
 }

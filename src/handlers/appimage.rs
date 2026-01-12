@@ -56,7 +56,11 @@ pub fn extract_app_name(path: &Path) -> String {
                 .split(['-', '_'])
                 .take_while(|part| {
                     // バージョン番号やアーキテクチャっぽいものは除外
-                    !part.chars().next().map(|c| c.is_ascii_digit()).unwrap_or(false)
+                    !part
+                        .chars()
+                        .next()
+                        .map(|c| c.is_ascii_digit())
+                        .unwrap_or(false)
                         && *part != "x86_64"
                         && *part != "x64"
                         && *part != "amd64"
@@ -67,10 +71,7 @@ pub fn extract_app_name(path: &Path) -> String {
                 .join("-");
 
             if name.is_empty() {
-                s.split(['-', '_'])
-                    .next()
-                    .unwrap_or(s)
-                    .to_lowercase()
+                s.split(['-', '_']).next().unwrap_or(s).to_lowercase()
             } else {
                 name.to_lowercase()
             }
@@ -157,10 +158,7 @@ pub fn install_with_options(path: &Path, options: InstallOptions) -> Result<()> 
         create_desktop_entry(&app_name, &dest_path)?;
     }
 
-    ui::success(&format!(
-        "AppImage '{}' をインストールしました",
-        app_name
-    ));
+    ui::success(&format!("AppImage '{}' をインストールしました", app_name));
     ui::info(&format!("  コマンド: {}", app_name));
     ui::info(&format!("  場所: {:?}", dest_path));
 

@@ -149,7 +149,9 @@ pub fn validate(config: &AppConfig) -> Result<()> {
     // Flatpak以外はURLが必要
     if config.source.source_type != SourceType::Flatpak {
         if config.source.url.is_empty()
-            || (!config.source.url.starts_with("http://") && !config.source.url.starts_with("https://")) {
+            || (!config.source.url.starts_with("http://")
+                && !config.source.url.starts_with("https://"))
+        {
             return Err(AnError::ValidationError {
                 message: "url must be a valid HTTP(S) URL".to_string(),
             }

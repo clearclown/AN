@@ -95,10 +95,7 @@ pub fn run() -> Result<()> {
                     }
                 }
 
-                ui::success(&format!(
-                    "同期完了: {} 件追加, {} 件更新",
-                    added, updated
-                ));
+                ui::success(&format!("同期完了: {} 件追加, {} 件更新", added, updated));
             } else {
                 ui::warn("appsディレクトリが見つかりません");
             }
@@ -134,9 +131,20 @@ pub fn run() -> Result<()> {
 fn sync_via_curl(db_dir: &Path) -> Result<()> {
     // 既知のアプリファイルをダウンロード
     let apps = [
-        "firefox", "brave", "gimp", "vlc", "obsidian", "vscode",
-        "discord", "keepassxc", "neovim", "audacity", "flameshot",
-        "telegram", "thunderbird", "libreoffice",
+        "firefox",
+        "brave",
+        "gimp",
+        "vlc",
+        "obsidian",
+        "vscode",
+        "discord",
+        "keepassxc",
+        "neovim",
+        "audacity",
+        "flameshot",
+        "telegram",
+        "thunderbird",
+        "libreoffice",
     ];
 
     let base_url = "https://raw.githubusercontent.com/clearclown/AN/main/apps";

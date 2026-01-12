@@ -119,7 +119,11 @@ pub fn remove(app_id: &str) -> Result<()> {
 
     // 関連するラッパースクリプトも削除（存在すれば）
     // 名前を推測して削除を試みる
-    let name_guess = app_id.split('.').next_back().unwrap_or(app_id).to_lowercase();
+    let name_guess = app_id
+        .split('.')
+        .next_back()
+        .unwrap_or(app_id)
+        .to_lowercase();
     let wrapper_path = bin_dir().join(&name_guess);
     if wrapper_path.exists() {
         // ANが生成したラッパーか確認

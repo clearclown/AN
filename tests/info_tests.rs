@@ -2,8 +2,8 @@
 
 use assert_cmd::Command;
 use predicates::prelude::*;
-use tempfile::tempdir;
 use std::fs;
+use tempfile::tempdir;
 
 /// テスト用のアプリDBを作成するヘルパー
 fn setup_test_db() -> tempfile::TempDir {
@@ -59,7 +59,9 @@ fn test_info_appimage() {
         .stdout(predicate::str::contains("firefox"))
         .stdout(predicate::str::contains("Mozilla Firefox"))
         .stdout(predicate::str::contains("AppImage"))
-        .stdout(predicate::str::contains("https://example.com/firefox.AppImage"))
+        .stdout(predicate::str::contains(
+            "https://example.com/firefox.AppImage",
+        ))
         .stdout(predicate::str::contains("x86_64"));
 }
 

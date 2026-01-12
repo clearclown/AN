@@ -67,10 +67,7 @@ pub fn remove(package: &str) -> Result<()> {
 
 /// Debパッケージを検出
 pub fn detect(name: &str) -> Option<String> {
-    let output = Command::new("dpkg")
-        .args(["-l", name])
-        .output()
-        .ok()?;
+    let output = Command::new("dpkg").args(["-l", name]).output().ok()?;
 
     if output.status.success() {
         // パッケージが見つかった

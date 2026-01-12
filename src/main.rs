@@ -18,7 +18,12 @@ fn main() -> Result<()> {
     let cli = Cli::parse();
 
     match cli.command {
-        Commands::Install { target, name, desktop, move_file } => {
+        Commands::Install {
+            target,
+            name,
+            desktop,
+            move_file,
+        } => {
             let options = commands::install::InstallOptions {
                 name,
                 desktop,
@@ -38,12 +43,10 @@ fn main() -> Result<()> {
         Commands::List => {
             commands::list::run()?;
         }
-        Commands::Search { query } => {
-            match query {
-                Some(q) => commands::search::run(&q)?,
-                None => commands::search::list_all()?,
-            }
-        }
+        Commands::Search { query } => match query {
+            Some(q) => commands::search::run(&q)?,
+            None => commands::search::list_all()?,
+        },
         Commands::Info { name } => {
             commands::search::show_details(&name)?;
         }

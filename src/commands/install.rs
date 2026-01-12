@@ -97,8 +97,9 @@ fn install_remote(name: &str, options: InstallOptions) -> Result<()> {
     ui::info(&format!("アプリを検索中: {}", name));
 
     // アプリDBから検索
-    let app_config = db::find_by_name(name)?
-        .ok_or_else(|| AnError::AppNotInDatabase { name: name.to_string() })?;
+    let app_config = db::find_by_name(name)?.ok_or_else(|| AnError::AppNotInDatabase {
+        name: name.to_string(),
+    })?;
 
     // ソースタイプに応じた処理
     match app_config.source.source_type {
@@ -118,10 +119,14 @@ fn install_remote(name: &str, options: InstallOptions) -> Result<()> {
 
 /// Flatpakアプリをインストール
 fn install_flatpak(app_config: &db::app::AppConfig) -> Result<()> {
-    let flatpak_id = app_config.source.flatpak_id.as_ref()
-        .ok_or_else(|| AnError::ValidationError {
-            message: "Flatpak IDが指定されていません".to_string(),
-        })?;
+    let flatpak_id =
+        app_config
+            .source
+            .flatpak_id
+            .as_ref()
+            .ok_or_else(|| AnError::ValidationError {
+                message: "Flatpak IDが指定されていません".to_string(),
+            })?;
 
     ui::info(&format!("Flatpak ID: {}", flatpak_id));
 
@@ -145,7 +150,8 @@ fn install_flatpak(app_config: &db::app::AppConfig) -> Result<()> {
         let stderr = String::from_utf8_lossy(&output.stderr);
         return Err(AnError::FlatpakInstallError {
             message: stderr.to_string(),
-        }.into());
+        }
+        .into());
     }
 
     // エイリアス作成
@@ -191,10 +197,12 @@ fn install_from_url(app_config: &db::app::AppConfig, options: InstallOptions) ->
         SourceType::AppImage => {
             let appimage_options = appimage::InstallOptions {
                 name: options.name,
-                desktop_entry: app_config.metadata
+                desktop_entry: app_config
+                    .metadata
                     .as_ref()
                     .map(|m| m.desktop_entry.unwrap_or(false))
-                    .unwrap_or(false) || options.desktop,
+                    .unwrap_or(false)
+                    || options.desktop,
                 remove_source: true,
             };
             appimage::install_with_options(&downloaded_path, appimage_options)?;

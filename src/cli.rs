@@ -86,12 +86,17 @@ mod tests {
     fn test_install_command() {
         let cli = Cli::parse_from(["an", "install", "firefox"]);
         match cli.command {
-            Commands::Install { target, name, desktop, move_file } => {
+            Commands::Install {
+                target,
+                name,
+                desktop,
+                move_file,
+            } => {
                 assert_eq!(target, "firefox");
                 assert!(name.is_none());
                 assert!(!desktop);
                 assert!(!move_file);
-            },
+            }
             _ => panic!("Expected Install command"),
         }
     }
@@ -109,12 +114,17 @@ mod tests {
     fn test_install_with_options() {
         let cli = Cli::parse_from(["an", "install", "app.AppImage", "-n", "myapp", "-d", "-m"]);
         match cli.command {
-            Commands::Install { target, name, desktop, move_file } => {
+            Commands::Install {
+                target,
+                name,
+                desktop,
+                move_file,
+            } => {
                 assert_eq!(target, "app.AppImage");
                 assert_eq!(name, Some("myapp".to_string()));
                 assert!(desktop);
                 assert!(move_file);
-            },
+            }
             _ => panic!("Expected Install command"),
         }
     }

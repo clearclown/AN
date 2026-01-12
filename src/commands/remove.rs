@@ -55,8 +55,9 @@ pub fn detect_type(target: &str) -> Option<DetectionInfo> {
 pub fn run(target: &str) -> Result<()> {
     ui::info(&format!("Detecting installation type for '{}'...", target));
 
-    let detection = detect_type(target)
-        .ok_or_else(|| AnError::AppNotInstalled { name: target.to_string() })?;
+    let detection = detect_type(target).ok_or_else(|| AnError::AppNotInstalled {
+        name: target.to_string(),
+    })?;
 
     ui::info(&format!("Found: {:?}", detection.install_type));
 

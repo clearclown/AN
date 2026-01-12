@@ -83,13 +83,8 @@ fn download_and_install(release: &GitHubRelease) -> Result<()> {
         .assets
         .iter()
         .find(|a| a.name == expected_name)
-        .ok_or_else(|| {
-            AnError::DownloadFailed {
-                message: format!(
-                    "アーキテクチャ {} に対応するバイナリが見つかりません",
-                    arch
-                ),
-            }
+        .ok_or_else(|| AnError::DownloadFailed {
+            message: format!("アーキテクチャ {} に対応するバイナリが見つかりません", arch),
         })?;
 
     ui::info(&format!("ダウンロード中: {}", asset.name));

@@ -46,7 +46,13 @@ pub fn run() -> Result<()> {
     match appimage::list_installed() {
         Ok(apps) if !apps.is_empty() => {
             for app in &apps {
-                println!("  {} ({})", app, appimage::apps_dir().join(format!("{}.AppImage", app)).display());
+                println!(
+                    "  {} ({})",
+                    app,
+                    appimage::apps_dir()
+                        .join(format!("{}.AppImage", app))
+                        .display()
+                );
             }
             total += apps.len();
         }
@@ -65,7 +71,11 @@ pub fn run() -> Result<()> {
         match flatpak::scan_apps() {
             Ok(apps) if !apps.is_empty() => {
                 for app in &apps {
-                    println!("  {} ({})", app.id.split('.').next_back().unwrap_or(&app.id), app.id);
+                    println!(
+                        "  {} ({})",
+                        app.id.split('.').next_back().unwrap_or(&app.id),
+                        app.id
+                    );
                 }
                 total += apps.len();
             }
@@ -98,7 +108,12 @@ pub fn is_installed(name: &str) -> Option<InstalledApp> {
         return Some(InstalledApp {
             name: name.to_string(),
             source: AppSource::AppImage,
-            path: Some(appimage::apps_dir().join(format!("{}.AppImage", name)).display().to_string()),
+            path: Some(
+                appimage::apps_dir()
+                    .join(format!("{}.AppImage", name))
+                    .display()
+                    .to_string(),
+            ),
         });
     }
 
