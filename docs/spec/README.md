@@ -10,6 +10,10 @@ AN (安装) パッケージマネージャーの機能仕様書です。
 | [remove.md](./remove.md) | F2: 削除機能仕様 |
 | [link.md](./link.md) | F3: エイリアス統合機能仕様 |
 | [update.md](./update.md) | F4: アップデート機能仕様 |
+| [list.md](./list.md) | F5: 一覧表示機能仕様 |
+| [search.md](./search.md) | F6: 検索機能仕様 |
+| [info.md](./info.md) | F7: 詳細表示機能仕様 |
+| [sync.md](./sync.md) | F8: DB同期機能仕様 |
 | [app-db-schema.md](./app-db-schema.md) | アプリDBスキーマ仕様 |
 
 ## 仕様書フォーマット

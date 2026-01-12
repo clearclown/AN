@@ -13,7 +13,7 @@ ANは5層のレイヤードアーキテクチャを採用しています。
 │         引数パース、サブコマンドルーティング                    │
 ├─────────────────────────────────────────────────────────────┤
 │                     Command Layer                            │
-│          install │ remove │ link │ update                    │
+│  install │ remove │ link │ update │ list │ search │ info │ sync │
 │              ビジネスロジック、フロー制御                       │
 ├─────────────────────────────────────────────────────────────┤
 │                     Handler Layer                            │
@@ -53,6 +53,9 @@ ANは5層のレイヤードアーキテクチャを採用しています。
 - `remove.rs` - 削除処理
 - `link.rs` - エイリアス生成
 - `update.rs` - アップデート処理
+- `list.rs` - インストール済みアプリ一覧
+- `search.rs` - アプリDB検索・詳細表示
+- `sync.rs` - アプリDB同期
 
 ### 3. Handler Layer (`src/handlers/`)
 
@@ -129,7 +132,10 @@ src/
 │   ├── install.rs
 │   ├── remove.rs
 │   ├── link.rs
-│   └── update.rs
+│   ├── update.rs
+│   ├── list.rs
+│   ├── search.rs
+│   └── sync.rs
 ├── handlers/
 │   ├── mod.rs
 │   ├── deb.rs
