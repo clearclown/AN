@@ -1,165 +1,151 @@
-承知いたしました。
-既存の `am` (App Manager) プロジェクトの思想を受け継ぎつつ、それを「統合型パッケージマネージャー」へと進化（フォーク）させる、**Project "An" (安装)** の要件定義書および仕様書を作成しました。
+# AN (安装) - Unified Package Manager for Linux
 
-これを開発のブループリント（設計図）とします。
+[![Rust](https://img.shields.io/badge/Rust-1.70%2B-orange.svg)](https://www.rust-lang.org/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
----
+**AN** (アン) は、Debian/Ubuntu系Linux向けの統合型パッケージマネージャーです。
 
-# 📜 Project An (安装) - 開発ドキュメント
+`.deb`、`AppImage`、`Flatpak` を単一のインターフェースで管理し、システムをクリーンに保ちます。
 
-## 1. プロジェクト概要
+## 特徴
 
-* **プロジェクト名:** `An` (An Package Manager)
-* **読み:** アン
-* **由来:** 中国語の「安装 (Install)」および「安 (Peace/Stability)」
-* **ベースプロジェクト:** Fork of / Wrapper around **"am" (App Manager)**
-* **ターゲットOS:** Debian/Ubuntu系 Linux (特に Linux Mint)
-* **開発言語:** Bash (Shell Script)
-* **コアコンセプト:** "Unified & Clean"
-* あらゆる形式（Deb, AppImage, Flatpak, Remote Script）を単一のインターフェースで扱う。
-* システムを汚さない（完全削除・パス管理の自動化）。
+- **統一インターフェース**: あらゆる形式を `an install` / `an remove` で管理
+- **完全削除**: 設定ファイル、依存関係、ユーザーデータまで完全にパージ
+- **透明性**: リモートインストール時はURLを表示し、ユーザー確認を要求
+- **Flatpakエイリアス**: `flatpak run org.gimp.GIMP` → `gimp` で起動可能に
 
+## インストール
 
+```bash
+# ワンライナーインストール（準備中）
+curl -fsSL https://raw.githubusercontent.com/clearclown/AN/main/install.sh | bash
 
----
-
-## 2. 要件定義書 (Requirement Definition)
-
-### 2.1. 解決したい課題
-
-1. **管理の断片化:** `.deb`は `apt/dpkg`、AppImageは手動移動、Flatpakは長いコマンド…と管理方法がバラバラである。
-2. **インストールの手間:** AppImageをダウンロードした後、「移動→権限付与→パス通し」の作業が面倒。
-3. **不透明性:** `am` などの便利ツールは、どこのURLからダウンロードしているか直感的に分からず不安。
-4. **削除の不完全さ:** `apt remove` や `flatpak uninstall` では設定ファイルや依存ゴミが残り、ディスクを圧迫する。
-
-### 2.2. 機能要件 (Functional Requirements)
-
-#### **F1. 万能インストール機能 (`an install`)**
-
-* **ローカルファイル処理:**
-* `.deb`: `apt` を使用してインストールし、依存関係を解決する。完了後、元のファイルの削除を提案する。
-* `.AppImage`: 所定のディレクトリへ移動し、実行権限を与え、パスの通った場所にシンボリックリンクを作成する。
-
-
-* **リモートインストール:**
-* アプリ名を指定した場合、`am` のデータベースを利用してインストールする。
-* **セキュリティ要件:** ダウンロード開始前に必ずソースURLを表示し、ユーザーの承認 (`y/N`) を求める。
-
-
-
-#### **F2. 完全削除機能 (`an remove / uninstall`)**
-
-* 指定されたアプリがどの形式でインストールされているか自動判別する。
-* **パージ処理 (Purge):**
-* Debian系: `apt purge` + `autoremove` を実行し、設定ファイルと不要な依存関係を全消去する。
-* Flatpak: `--delete-data` オプション付きで削除し、ユーザーデータを残さない。
-* AppImage: 実体ファイルとシンボリックリンクの両方を削除する。
-
-
-
-#### **F3. エイリアス統合機能 (`an link`)**
-
-* システム内の Flatpak アプリをスキャンし、短いコマンド名（例: `org.gimp.GIMP` -> `gimp`）で起動できるラッパースクリプトを自動生成する。
-
-#### **F4. メンテナンス機能 (`an update`)**
-
-* `an` 自体のアップデートおよび、`am` データベースの更新を行う。
-
-### 2.3. 非機能要件 (Non-Functional Requirements)
-
-* **ポータビリティ:** 追加の依存パッケージを極力減らし、標準的なコマンド (`curl`, `sed`, `awk`, `grep`) で動作させる。
-* **透過性:** 実行しているコマンド（`apt` や `flatpak`）のログを隠蔽せず、ユーザーが見えるようにする。
-* **安全性:** `sudo` は必要な操作（apt, システム領域への書き込み）の時のみ要求する。
-
----
-
-## 3. 技術仕様書 (Technical Specification)
-
-### 3.1. システムアーキテクチャ
-
-`an` は **"Intelligent Wrapper"** として動作します。
-
-```text
-User Input (an install xxx)
-      ⬇
-[ Argument Parser ] 判別ロジック
-      ⬇
--------------------------------------------------------
-|  Local File?  |  Remote Name?  |  Flatpak ID?       |
--------------------------------------------------------
-      ⬇                ⬇                 ⬇
-[ Local Module ] [ Remote Module ] [ Link Module ]
-  - .deb handler   - am wrapper      - flatpak scanner
-  - .AppImage      - URL checker
-    handler
-      ⬇                ⬇                 ⬇
-[ System Exec ]  [ am Core ]       [ Symlink Gen ]
- (apt / mv / ln)
-
+# Cargoからビルド
+cargo install --git https://github.com/clearclown/AN
 ```
 
-### 3.2. ディレクトリ構成
+## 使い方
 
-Linuxの標準的なマナー（XDG Base Directory Specification）に準拠します。
+### アプリのインストール
 
-| 用途 | パス | 備考 |
-| --- | --- | --- |
-| **実行ファイル** | `/usr/local/bin/an` | または `~/.local/bin/an` |
-| **AppImage格納** | `~/Applications/` | 実体ファイルの置き場所 |
-| **リンク置き場** | `~/.local/bin/` | パスの通った場所 |
-| **設定/キャッシュ** | `~/.config/an/` | 将来的な設定ファイル用 |
+```bash
+# リモートアプリをインストール
+an install firefox
 
-### 3.3. コマンドインターフェース仕様
+# ローカル.debファイルをインストール
+an install ~/Downloads/vscode.deb
 
-#### `an install <target>` (エイリアス: `i`)
+# ローカルAppImageをインストール
+an install ~/Downloads/Obsidian.AppImage
+```
 
-* **引数:** ファイルパス または アプリ名
-* **フロー:**
-1. `target` がファイルとして存在するかチェック。
-2. **Yes (ファイル):** 拡張子で分岐処理。
-3. **No (ファイルなし):** `am` コマンドへ移譲フローへ。
-* `am -u <target>` でURL取得。
-* ユーザー確認プロンプト表示。
-* 承認なら `am install <target>` 実行。
+### アプリの削除
 
+```bash
+# 完全削除（設定ファイルも削除）
+an remove firefox
+an rm vscode
+an uninstall obsidian
+```
 
+### Flatpakエイリアス生成
 
+```bash
+# 全Flatpakアプリにエイリアスを作成
+an link
+```
 
+### 更新
 
-#### `an remove <target>` (エイリアス: `rm`, `uninstall`)
+```bash
+# AN本体とアプリDBを更新
+an update
+```
 
-* **引数:** アプリ名
-* **フロー (優先順位順に検索):**
-1. `~/.local/bin/<target>` (AppImageリンク) をチェック → 削除。
-2. `dpkg -l` (Debパッケージ) をチェック → `apt purge`。
-3. `flatpak list` をチェック (ID逆引き) → `flatpak uninstall --delete-data`。
-4. `am` 管理下かチェック → `am remove`。
+## コマンド一覧
 
+| コマンド | エイリアス | 説明 |
+|----------|----------|------|
+| `an install <target>` | `i` | アプリをインストール |
+| `an remove <target>` | `rm`, `uninstall` | アプリを完全削除 |
+| `an link` | `l` | Flatpakエイリアスを生成 |
+| `an update` | - | AN・DBを更新 |
 
+## アーキテクチャ
 
-#### `an link` (エイリアス: `l`)
+```
+┌─────────────────────────────────────────────────┐
+│                    CLI Layer                     │
+│              (clap derive macros)                │
+├─────────────────────────────────────────────────┤
+│                 Command Layer                    │
+│     install │ remove │ link │ update            │
+├─────────────────────────────────────────────────┤
+│                 Handler Layer                    │
+│      deb │ appimage │ flatpak │ remote          │
+├─────────────────────────────────────────────────┤
+│                   DB Layer                       │
+│            TOML App Database                     │
+└─────────────────────────────────────────────────┘
+```
 
-* **機能:** Flatpak全スキャン & エイリアス生成。
-* **命名規則:** アプリ名 (`Name`) を小文字化・スペース除去して使用。重複時は連番またはID末尾を使用。
+## ディレクトリ構成
 
----
+| 用途 | パス |
+|------|------|
+| 実行ファイル | `/usr/local/bin/an` または `~/.local/bin/an` |
+| AppImage格納 | `~/Applications/` |
+| シンボリックリンク | `~/.local/bin/` |
+| 設定/キャッシュ | `~/.config/an/` |
 
-## 4. 開発ロードマップ
+## 開発
 
-### Phase 1: コア実装 (MVP)
+### 必要環境
 
-* **目標:** `.zshrc` に書けるレベルではなく、独立したスクリプトファイルとしてリポジトリを作成する。
-* `install` (Local Deb/AppImage, Remote am), `remove` (Purge), `link` の実装。
+- Rust 1.70+
+- Linux (Debian/Ubuntu系)
 
-### Phase 2: インストーラー作成
+### ビルド
 
-* **目標:** ユーザーがワンライナーで `an` をインストールできるようにする。
-* `am` が未インストールの場合は自動で入れる処理の追加。
+```bash
+# 開発ビルド
+cargo build
 
-### Phase 3: UI/UX改善
+# テスト
+cargo test
 
-* 出力メッセージのカラー化（成功＝緑、警告＝黄、エラー＝赤）。
-* TAB補完ファイルの作成（zsh用）。
+# リリースビルド
+cargo build --release
+```
 
-ただし、`AN`のインストールを楽にしたい。将来的には、`apt install`や`cargo`などで簡単にできるようにしたい。
+### プロジェクト構造
 
+```
+AN/
+├── src/                 # Rustソースコード
+│   ├── commands/        # サブコマンド実装
+│   ├── handlers/        # パッケージ形式ハンドラ
+│   ├── db/              # アプリDB層
+│   └── utils/           # ユーティリティ
+├── apps/                # アプリDB (TOML)
+├── docs/                # ドキュメント
+│   ├── spec/            # 機能仕様書
+│   ├── design/          # 設計・ステートマシン図
+│   └── guides/          # ユーザーガイド
+└── tests/               # テスト
+```
+
+## ドキュメント
+
+- [機能仕様書](docs/spec/README.md)
+- [設計ドキュメント](docs/design/README.md)
+- [ユーザーガイド](docs/guides/README.md)
+- [CLAUDE.md](CLAUDE.md) - 開発者向けガイド
+
+## ライセンス
+
+MIT License - 詳細は [LICENSE](LICENSE) を参照
+
+## 謝辞
+
+このプロジェクトは [AM (App Manager)](https://github.com/ivan-hc/AM) にインスパイアされています。
