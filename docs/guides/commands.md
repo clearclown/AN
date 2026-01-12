@@ -13,6 +13,7 @@ ANの全コマンドとオプションの一覧です。
 | `list` | `ls` | インストール済みアプリ一覧 |
 | `search` | `s` | アプリDBを検索 |
 | `info` | - | アプリ詳細を表示 |
+| `sync` | - | アプリDBをGitHubから同期 |
 
 ## グローバルオプション
 
@@ -370,6 +371,46 @@ Flatpak ID: org.telegram.desktop
 ホームページ: https://telegram.org/
 カテゴリ: Network, InstantMessaging
 ```
+
+---
+
+## sync
+
+アプリデータベースをGitHubから同期します。
+
+### 構文
+
+```bash
+an sync
+```
+
+### 動作
+
+1. GitHubリポジトリからappsディレクトリを取得
+2. `~/.config/an/apps/`にTOMLファイルをコピー
+3. 新規・更新ファイル数を表示
+
+### 例
+
+```bash
+an sync
+```
+
+### 出力例
+
+```
+アプリDBを同期中...
+
+GitHubからデータを取得中...
+✓ 同期完了: 16 件追加, 0 件更新
+
+現在のアプリDB: 30 件
+```
+
+### 注意
+
+- gitがインストールされていない場合、curlでフォールバック
+- 同期先: `~/.config/an/apps/`
 
 ---
 
