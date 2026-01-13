@@ -5,7 +5,7 @@ homepage = "https://neovim.io/"
 
 [source]
 type = "appimage"
-url = "https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
+url = "https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage"
 architecture = ["x86_64"]
 
 [metadata]
