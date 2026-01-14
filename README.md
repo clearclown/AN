@@ -25,8 +25,8 @@ curl -fsSL https://raw.githubusercontent.com/clearclown/AN/main/install.sh | bas
 ### Cargo (Rustユーザー向け)
 
 ```bash
-# crates.io から（公開後）
-cargo install an
+# crates.io から
+cargo install an-installer
 
 # GitHubから直接
 cargo install --git https://github.com/clearclown/AN

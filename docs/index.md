@@ -58,7 +58,7 @@ an update
 | Method | Command |
 |--------|---------|
 | **One-liner** | `curl -fsSL https://raw.githubusercontent.com/clearclown/AN/main/install.sh \| bash` |
-| **Cargo** | `cargo install an` |
+| **Cargo** | `cargo install an-installer` |
 | **AUR** | `yay -S an` |
 | **Nix** | `nix run github:clearclown/AN` |
 
