@@ -15,6 +15,7 @@ use std::path::Path;
 pub enum FileType {
     Deb,
     AppImage,
+    Flatpakref,
 }
 
 /// インストールオプション
@@ -39,6 +40,7 @@ pub fn detect_file_type(path: &str) -> Result<FileType, AnError> {
     match extension.as_deref() {
         Some("deb") => Ok(FileType::Deb),
         Some("appimage") => Ok(FileType::AppImage),
+        Some("flatpakref") => Ok(FileType::Flatpakref),
         Some(ext) => Err(AnError::UnknownFileType {
             extension: ext.to_string(),
         }),
@@ -86,6 +88,10 @@ fn install_local(path: &str, options: InstallOptions) -> Result<()> {
                 remove_source: options.move_file,
             };
             appimage::install_with_options(Path::new(path), appimage_options)?;
+        }
+        FileType::Flatpakref => {
+            ui::info("検出: Flatpakref");
+            flatpak::install_from_ref(Path::new(path))?;
         }
     }
 

@@ -102,6 +102,25 @@ exec flatpak run {} "$@"
     Ok(())
 }
 
+/// .flatpakref ファイルからインストール
+pub fn install_from_ref(ref_file: &std::path::Path) -> Result<()> {
+    ui::info("Flatpakref ファイルからインストール中...");
+
+    let output = Command::new("flatpak")
+        .args(["install", "-y", ref_file.to_str().unwrap()])
+        .output()?;
+
+    if !output.status.success() {
+        return Err(AnError::FlatpakInstallError {
+            message: String::from_utf8_lossy(&output.stderr).to_string(),
+        }
+        .into());
+    }
+
+    ui::success("Flatpak アプリをインストールしました");
+    Ok(())
+}
+
 /// Flatpakアプリを削除
 pub fn remove(app_id: &str) -> Result<()> {
     ui::info(&format!("Removing Flatpak app: {}", app_id));
