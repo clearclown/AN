@@ -118,6 +118,38 @@ pub fn install_from_ref(ref_file: &std::path::Path) -> Result<()> {
     }
 
     ui::success("Flatpak アプリをインストールしました");
+
+    // インストール後、新しくインストールされたアプリのエイリアスを作成
+    ui::info("エイリアスを作成中...");
+
+    // 全Flatpakアプリをスキャンして、新しいアプリのエイリアスを作成
+    let apps = scan_apps()?;
+    let mut created = 0;
+
+    for app in apps {
+        let name = app.id.split('.').next_back().unwrap_or(&app.id).to_lowercase();
+
+        // 既存のラッパーがあればスキップ
+        let wrapper_path = bin_dir().join(&name);
+        if wrapper_path.exists() {
+            continue;
+        }
+
+        // コマンド名の衝突チェック
+        if check_name_conflict(&name) {
+            continue;
+        }
+
+        // ラッパー作成
+        create_wrapper(&app.id, &name)?;
+        ui::info(&format!("  {} → {}", name, app.id));
+        created += 1;
+    }
+
+    if created > 0 {
+        ui::success(&format!("エイリアス作成: {} 件", created));
+    }
+
     Ok(())
 }
 
