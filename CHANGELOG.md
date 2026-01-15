@@ -6,6 +6,24 @@ AN (安装) の変更履歴です。
 
 ## [Unreleased]
 
+## [0.1.1] - 2025-01-14
+
+### Added
+
+- **Flatpakref サポート**: `.flatpakref` ファイルからのインストールに対応
+  - `an install app.flatpakref` で Flatpak アプリをインストール可能に
+  - インストール後、自動でコマンドエイリアスを作成
+
+### Fixed
+
+- Neovim AppImage URLを更新 (v0.11+ 対応)
+- `.flatpakref` インストール時にエイリアスが作成されない問題を修正
+
+### Changed
+
+- crates.io パッケージ名を `an` から `an-installer` に変更（バイナリ名は `an` のまま）
+- TLS実装をOpenSSLからrustlsに変更（クロスコンパイル対応）
+
 ## [0.1.0] - 2025-01-13
 
 ### Added
