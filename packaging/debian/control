@@ -1,0 +1,24 @@
+Source: an-installer
+Section: utils
+Priority: optional
+Maintainer: clearclown <your-email@example.com>
+Build-Depends: debhelper-compat (= 13), cargo, rustc (>= 1.70)
+Standards-Version: 4.6.0
+Homepage: https://github.com/clearclown/AN
+Vcs-Browser: https://github.com/clearclown/AN
+Vcs-Git: https://github.com/clearclown/AN.git
+Rules-Requires-Root: no
+
+Package: an-installer
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Recommends: flatpak, dpkg
+Description: AN (安装) - Unified Package Manager for Linux
+ AN is a unified package manager for Debian/Ubuntu-based Linux distributions.
+ It provides a single interface to manage .deb, AppImage, and Flatpak packages.
+ .
+ Features:
+  - Unified interface: manage all formats with `an install` / `an remove`
+  - Complete removal: purge config files, dependencies, and user data
+  - Transparency: display URLs for remote installations
+  - Flatpak aliases: run `flatpak run org.gimp.GIMP` as `gimp`

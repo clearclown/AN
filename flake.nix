@@ -18,32 +18,46 @@
           inherit system overlays;
         };
         rustToolchain = pkgs.rust-bin.stable.latest.default;
+
+        an-installer = pkgs.rustPlatform.buildRustPackage rec {
+          pname = "an-installer";
+          version = "0.1.1";
+          src = ./.;
+          cargoLock = {
+            lockFile = ./Cargo.lock;
+          };
+
+          nativeBuildInputs = with pkgs; [
+            pkg-config
+          ];
+
+          buildInputs = with pkgs; [
+            openssl
+          ];
+
+          # テストは実行しない（Flatpak等のシステム依存があるため）
+          doCheck = false;
+
+          meta = with pkgs.lib; {
+            description = "AN (安装) - Unified Package Manager for Linux";
+            homepage = "https://github.com/clearclown/AN";
+            license = licenses.mit;
+            maintainers = [ ];
+            platforms = platforms.linux;
+            mainProgram = "an";
+          };
+        };
       in
       {
         packages = {
-          default = pkgs.rustPlatform.buildRustPackage {
-            pname = "an";
-            version = "0.1.0";
-            src = ./.;
-            cargoLock = {
-              lockFile = ./Cargo.lock;
-            };
+          default = an-installer;
+          an-installer = an-installer;
+        };
 
-            nativeBuildInputs = with pkgs; [
-              pkg-config
-            ];
-
-            buildInputs = with pkgs; [
-              openssl
-            ];
-
-            meta = with pkgs.lib; {
-              description = "AN (安装) - Unified Package Manager for Linux";
-              homepage = "https://github.com/clearclown/AN";
-              license = licenses.mit;
-              maintainers = [ ];
-              platforms = platforms.linux;
-            };
+        apps = {
+          default = {
+            type = "app";
+            program = "${an-installer}/bin/an";
           };
         };
 

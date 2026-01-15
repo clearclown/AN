@@ -1,0 +1,13 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	cargo build --release
+
+override_dh_auto_install:
+	install -Dm755 target/release/an debian/an-installer/usr/bin/an
+
+override_dh_auto_test:
+	# Skip tests (require system dependencies)

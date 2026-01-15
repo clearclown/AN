@@ -1,0 +1,49 @@
+# Maintainer: clearclown <your-email@example.com>
+pkgname=an-installer-git
+pkgver=r42.26bb5a4
+pkgrel=1
+pkgdesc="AN (安装) - Unified Package Manager for Linux (development version)"
+arch=('x86_64' 'aarch64')
+url="https://github.com/clearclown/AN"
+license=('MIT')
+depends=()
+makedepends=('cargo' 'git')
+optdepends=(
+    'flatpak: Flatpak support'
+    'dpkg: Debian package support'
+)
+provides=('an-installer')
+conflicts=('an-installer')
+source=("$pkgname::git+https://github.com/clearclown/AN.git")
+sha256sums=('SKIP')
+
+pkgver() {
+    cd "$srcdir/$pkgname"
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+prepare() {
+    cd "$pkgname"
+    export RUSTUP_TOOLCHAIN=stable
+    cargo fetch --locked --target "$CARCH-unknown-linux-gnu"
+}
+
+build() {
+    cd "$pkgname"
+    export RUSTUP_TOOLCHAIN=stable
+    export CARGO_TARGET_DIR=target
+    cargo build --frozen --release --all-features
+}
+
+check() {
+    cd "$pkgname"
+    export RUSTUP_TOOLCHAIN=stable
+    cargo test --frozen --all-features
+}
+
+package() {
+    cd "$pkgname"
+    install -Dm755 target/release/an "$pkgdir/usr/bin/an"
+    install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
+}

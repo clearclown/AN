@@ -1,0 +1,33 @@
+name: an-installer
+base: core22
+version: '0.1.1'
+summary: AN (安装) - Unified Package Manager for Linux
+description: |
+  AN is a unified package manager for Debian/Ubuntu-based Linux distributions.
+  It provides a single interface to manage .deb, AppImage, and Flatpak packages.
+
+  Features:
+  - Unified interface: manage all formats with `an install` / `an remove`
+  - Complete removal: purge config files, dependencies, and user data
+  - Transparency: display URLs for remote installations
+  - Flatpak aliases: run `flatpak run org.gimp.GIMP` as `gimp`
+
+grade: stable
+confinement: classic
+
+apps:
+  an-installer:
+    command: bin/an
+    aliases: [an]
+
+parts:
+  an-installer:
+    plugin: rust
+    source: .
+    build-packages:
+      - pkg-config
+      - libssl-dev
+    override-build: |
+      cargo build --release
+      mkdir -p $SNAPCRAFT_PART_INSTALL/bin
+      cp target/release/an $SNAPCRAFT_PART_INSTALL/bin/

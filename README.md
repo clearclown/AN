@@ -35,11 +35,15 @@ cargo install --git https://github.com/clearclown/AN
 ### Arch Linux (AUR)
 
 ```bash
-# yay
-yay -S an
+# yay（安定版）
+yay -S an-installer
 
-# paru
-paru -S an
+# paru（安定版）
+paru -S an-installer
+
+# 開発版
+yay -S an-installer-git
+paru -S an-installer-git
 ```
 
 ### Nix
@@ -57,6 +61,22 @@ nix run github:clearclown/AN -- --help
 ```bash
 brew tap clearclown/an
 brew install an
+```
+
+### apt (Debian/Ubuntu PPA)
+
+```bash
+# PPA追加（将来実装予定）
+sudo add-apt-repository ppa:clearclown/an
+sudo apt update
+sudo apt install an-installer
+```
+
+### Snap
+
+```bash
+# Snap Store から（将来実装予定）
+sudo snap install an-installer --classic
 ```
 
 ### 手動ダウンロード

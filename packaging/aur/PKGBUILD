@@ -1,0 +1,42 @@
+# Maintainer: clearclown <your-email@example.com>
+pkgname=an-installer
+pkgver=0.1.1
+pkgrel=1
+pkgdesc="AN (安装) - Unified Package Manager for Linux"
+arch=('x86_64' 'aarch64')
+url="https://github.com/clearclown/AN"
+license=('MIT')
+depends=()
+makedepends=('cargo' 'git')
+optdepends=(
+    'flatpak: Flatpak support'
+    'dpkg: Debian package support'
+)
+source=("$pkgname-$pkgver.tar.gz::https://github.com/clearclown/AN/archive/v$pkgver.tar.gz")
+sha256sums=('SKIP')  # Update with actual SHA256
+
+prepare() {
+    cd "AN-$pkgver"
+    export RUSTUP_TOOLCHAIN=stable
+    cargo fetch --locked --target "$CARCH-unknown-linux-gnu"
+}
+
+build() {
+    cd "AN-$pkgver"
+    export RUSTUP_TOOLCHAIN=stable
+    export CARGO_TARGET_DIR=target
+    cargo build --frozen --release --all-features
+}
+
+check() {
+    cd "AN-$pkgver"
+    export RUSTUP_TOOLCHAIN=stable
+    cargo test --frozen --all-features
+}
+
+package() {
+    cd "AN-$pkgver"
+    install -Dm755 target/release/an "$pkgdir/usr/bin/an"
+    install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
+}

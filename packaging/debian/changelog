@@ -1,0 +1,15 @@
+an-installer (0.1.1-1) unstable; urgency=medium
+
+  * New upstream release 0.1.1
+  * Add .flatpakref file support
+  * Auto-create command aliases after Flatpak installation
+  * Update Neovim AppImage URL for v0.11+
+  * Change TLS implementation from OpenSSL to rustls
+
+ -- clearclown <your-email@example.com>  Wed, 15 Jan 2025 04:00:00 +0000
+
+an-installer (0.1.0-1) unstable; urgency=low
+
+  * Initial release
+
+ -- clearclown <your-email@example.com>  Mon, 13 Jan 2025 00:00:00 +0000

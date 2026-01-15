@@ -1,1 +1,23 @@
 /target
+
+# Packaging
+*.deb
+*.snap
+*.tar.gz
+*.tar.xz
+.snapcraft/
+parts/
+prime/
+stage/
+
+# Debian
+debian/files
+debian/.debhelper
+debian/an-installer/
+debian/*.log
+debian/*.substvars
+
+# AUR
+*.pkg.tar.zst
+pkg/
+src/
