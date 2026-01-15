@@ -3,45 +3,47 @@
 [![Rust](https://img.shields.io/badge/Rust-1.70%2B-orange.svg)](https://www.rust-lang.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-**AN** (アン) は、Debian/Ubuntu系Linux向けの統合型パッケージマネージャーです。
+**English** | [日本語](docs/readmeLang/README_ja.md) | [简体中文](docs/readmeLang/README_zh-CN.md) | [繁體中文](docs/readmeLang/README_zh-TW.md) | [Русский](docs/readmeLang/README_ru.md) | [Українська](docs/readmeLang/README_uk.md) | [فارسی](docs/readmeLang/README_fa.md) | [العربية](docs/readmeLang/README_ar.md)
 
-`.deb`、`AppImage`、`Flatpak` を単一のインターフェースで管理し、システムをクリーンに保ちます。
+**AN** is a unified package manager for Debian/Ubuntu-based Linux distributions.
 
-## 特徴
+Manage `.deb`, `AppImage`, and `Flatpak` packages through a single interface while keeping your system clean.
 
-- **統一インターフェース**: あらゆる形式を `an install` / `an remove` で管理
-- **完全削除**: 設定ファイル、依存関係、ユーザーデータまで完全にパージ
-- **透明性**: リモートインストール時はURLを表示し、ユーザー確認を要求
-- **Flatpakエイリアス**: `flatpak run org.gimp.GIMP` → `gimp` で起動可能に
+## Features
 
-## インストール
+- **Unified Interface**: Manage all package formats with `an install` / `an remove`
+- **Complete Removal**: Purge config files, dependencies, and user data completely
+- **Transparency**: Display URLs for remote installations and require user confirmation
+- **Flatpak Aliases**: Run `flatpak run org.gimp.GIMP` as simply `gimp`
 
-### ワンライナー（推奨）
+## Installation
+
+### One-liner (Recommended)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/clearclown/AN/main/install.sh | bash
 ```
 
-### Cargo (Rustユーザー向け)
+### Cargo (For Rust Users)
 
 ```bash
-# crates.io から
+# From crates.io
 cargo install an-installer
 
-# GitHubから直接
+# Directly from GitHub
 cargo install --git https://github.com/clearclown/AN
 ```
 
 ### Arch Linux (AUR)
 
 ```bash
-# yay（安定版）
+# yay (stable version)
 yay -S an-installer
 
-# paru（安定版）
+# paru (stable version)
 paru -S an-installer
 
-# 開発版
+# Development version
 yay -S an-installer-git
 paru -S an-installer-git
 ```
@@ -49,10 +51,10 @@ paru -S an-installer-git
 ### Nix
 
 ```bash
-# Flakeを使用
+# Using Flakes
 nix profile install github:clearclown/AN
 
-# 一時的に使用
+# Temporary usage
 nix run github:clearclown/AN -- --help
 ```
 
@@ -66,7 +68,7 @@ brew install an
 ### apt (Debian/Ubuntu PPA)
 
 ```bash
-# PPA追加（将来実装予定）
+# Add PPA (Coming soon)
 sudo add-apt-repository ppa:clearclown/an
 sudo apt update
 sudo apt install an-installer
@@ -75,27 +77,27 @@ sudo apt install an-installer
 ### Snap
 
 ```bash
-# Snap Store から（将来実装予定）
+# From Snap Store (Coming soon)
 sudo snap install an-installer --classic
 ```
 
-### 手動ダウンロード
+### Manual Download
 
-[Releases](https://github.com/clearclown/AN/releases) からバイナリをダウンロード:
+Download binaries from [Releases](https://github.com/clearclown/AN/releases):
 
-| アーキテクチャ | ファイル名 |
-|---------------|-----------|
+| Architecture | Filename |
+|--------------|----------|
 | x86_64 | `an-linux-x86_64` |
 | aarch64 (ARM64) | `an-linux-aarch64` |
 
 ```bash
-# 例: x86_64
+# Example: x86_64
 wget https://github.com/clearclown/AN/releases/latest/download/an-linux-x86_64
 chmod +x an-linux-x86_64
 sudo mv an-linux-x86_64 /usr/local/bin/an
 ```
 
-### ソースからビルド
+### Build from Source
 
 ```bash
 git clone https://github.com/clearclown/AN
@@ -104,75 +106,75 @@ cargo build --release
 sudo cp target/release/an /usr/local/bin/
 ```
 
-## 使い方
+## Usage
 
-### アプリのインストール
+### Install Applications
 
 ```bash
-# リモートアプリをインストール
+# Install remote application
 an install firefox
 
-# ローカル.debファイルをインストール
+# Install local .deb file
 an install ~/Downloads/vscode.deb
 
-# ローカルAppImageをインストール
+# Install local AppImage
 an install ~/Downloads/Obsidian.AppImage
 ```
 
-### アプリの削除
+### Remove Applications
 
 ```bash
-# 完全削除（設定ファイルも削除）
+# Complete removal (including config files)
 an remove firefox
 an rm vscode
 an uninstall obsidian
 ```
 
-### Flatpakエイリアス生成
+### Generate Flatpak Aliases
 
 ```bash
-# 全Flatpakアプリにエイリアスを作成
+# Create aliases for all Flatpak apps
 an link
 ```
 
-### 更新
+### Update
 
 ```bash
-# AN本体とアプリDBを更新
+# Update AN itself and app database
 an update
 ```
 
-### アプリの検索・情報表示
+### Search and Display Information
 
 ```bash
-# インストール済みアプリ一覧
+# List installed applications
 an list
 
-# 利用可能なアプリを検索
+# Search available applications
 an search browser
-an search          # 全アプリ一覧
+an search          # List all apps
 
-# アプリ詳細を表示
+# Display application details
 an info firefox
 
-# アプリDBを最新に同期
+# Sync app database from GitHub
 an sync
 ```
 
-## コマンド一覧
+## Command Reference
 
-| コマンド | エイリアス | 説明 |
-|----------|----------|------|
-| `an install <target>` | `i` | アプリをインストール |
-| `an remove <target>` | `rm`, `uninstall` | アプリを完全削除 |
-| `an link` | `l` | Flatpakエイリアスを生成 |
-| `an update` | - | AN本体・DBを更新 |
-| `an list` | `ls` | インストール済みアプリ一覧 |
-| `an search [query]` | `s` | アプリDBを検索 |
-| `an info <name>` | - | アプリ詳細を表示 |
-| `an sync` | - | アプリDBをGitHubから同期 |
+| Command | Aliases | Description |
+|---------|---------|-------------|
+| `an install <target>` | `i` | Install an application |
+| `an remove <target>` | `rm`, `uninstall` | Completely remove an application |
+| `an link` | `l` | Generate Flatpak aliases |
+| `an update` | - | Update AN and database |
+| `an list` | `ls` | List installed applications |
+| `an search [query]` | `s` | Search app database |
+| `an info <name>` | - | Display application details |
+| `an sync` | - | Sync app database from GitHub |
 
-## アーキテクチャ
+## Architecture
 
 ```
 ┌───────────────────────────────────────────────────────────────┐
@@ -190,63 +192,63 @@ an sync
 └───────────────────────────────────────────────────────────────┘
 ```
 
-## ディレクトリ構成
+## Directory Structure
 
-| 用途 | パス |
-|------|------|
-| 実行ファイル | `/usr/local/bin/an` または `~/.local/bin/an` |
-| AppImage格納 | `~/Applications/` |
-| シンボリックリンク | `~/.local/bin/` |
-| 設定/キャッシュ | `~/.config/an/` |
+| Purpose | Path |
+|---------|------|
+| Executable | `/usr/local/bin/an` or `~/.local/bin/an` |
+| AppImage Storage | `~/Applications/` |
+| Symbolic Links | `~/.local/bin/` |
+| Config/Cache | `~/.config/an/` |
 
-## 開発
+## Development
 
-### 必要環境
+### Requirements
 
 - Rust 1.70+
-- Linux (Debian/Ubuntu系)
+- Linux (Debian/Ubuntu-based)
 
-### ビルド
+### Building
 
 ```bash
-# 開発ビルド
+# Development build
 cargo build
 
-# テスト
+# Run tests
 cargo test
 
-# リリースビルド
+# Release build
 cargo build --release
 ```
 
-### プロジェクト構造
+### Project Structure
 
 ```
 AN/
-├── src/                 # Rustソースコード
-│   ├── commands/        # サブコマンド実装
-│   ├── handlers/        # パッケージ形式ハンドラ
-│   ├── db/              # アプリDB層
-│   └── utils/           # ユーティリティ
-├── apps/                # アプリDB (TOML)
-├── docs/                # ドキュメント
-│   ├── spec/            # 機能仕様書
-│   ├── design/          # 設計・ステートマシン図
-│   └── guides/          # ユーザーガイド
-└── tests/               # テスト
+├── src/                 # Rust source code
+│   ├── commands/        # Subcommand implementations
+│   ├── handlers/        # Package format handlers
+│   ├── db/              # App database layer
+│   └── utils/           # Utilities
+├── apps/                # App database (TOML)
+├── docs/                # Documentation
+│   ├── spec/            # Feature specifications
+│   ├── design/          # Design & state machine diagrams
+│   └── guides/          # User guides
+└── tests/               # Tests
 ```
 
-## ドキュメント
+## Documentation
 
-- [機能仕様書](docs/spec/README.md)
-- [設計ドキュメント](docs/design/README.md)
-- [ユーザーガイド](docs/guides/README.md)
-- [CLAUDE.md](CLAUDE.md) - 開発者向けガイド
+- [Feature Specifications](docs/spec/README.md)
+- [Design Documents](docs/design/README.md)
+- [User Guides](docs/guides/README.md)
+- [CLAUDE.md](CLAUDE.md) - Developer Guide
 
-## ライセンス
+## License
 
-MIT License - 詳細は [LICENSE](LICENSE) を参照
+MIT License - See [LICENSE](LICENSE) for details
 
-## 謝辞
+## Acknowledgments
 
-このプロジェクトは [AM (App Manager)](https://github.com/ivan-hc/AM) にインスパイアされています。
+This project is inspired by [AM (App Manager)](https://github.com/ivan-hc/AM).
